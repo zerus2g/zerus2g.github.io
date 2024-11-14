@@ -1,0 +1,71 @@
+/* scaffolding */
+/* ----------- */
+
+.tt-menu,
+.gist {
+  text-align: left;
+}
+
+/* base styles */
+/* ----------- */
+
+.tt-menu {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.tt-suggestion a:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-dataset .item a,
+.tt-dataset .empty-message {
+  display: block;
+  font-size: 16px;
+  padding: 10px 15px;
+  display: block;
+}
+.tt-dataset .item {
+  border-bottom: 1px solid #e9f0f8;
+}
+.tt-dataset .item:last-child {
+  border-bottom: 0px;
+}
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}
+
+/* example specific styles */
+/* ----------------------- */
+
+#custom-templates .empty-message {
+  padding: 5px 10px;
+  text-align: center;
+}
+
+#multiple-datasets .league-name {
+  margin: 0 20px 5px 20px;
+  padding: 3px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+#scrollable-dropdown-menu .tt-menu {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+#rtl-support .tt-menu {
+  text-align: right;
+}
