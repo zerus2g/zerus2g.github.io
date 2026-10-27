@@ -1,0 +1,72 @@
+{
+  "site": {
+    "name": "Z-STORE",
+    "badge": "Hệ Thống Giao Key & Tài Khoản Tự Động 24/7",
+    "title": "Kho Bản Quyền Số & Phần Mềm Uy Tín Hàng Đầu",
+    "description": "Bảo hành trọn đời, hỗ trợ kỹ thuật tức thì, thanh toán tự động qua QR Code ngân hàng & tiền số.",
+    "telegram": "https://t.me/example",
+    "discord": "https://discord.gg/example",
+    "footer": "© 2026 Z-Store. Hosted on GitHub Pages. Giao hàng tự động qua API."
+  },
+  "payment": {
+    "bankId": "970422",
+    "accountNo": "000000000",
+    "accountName": "NGUYEN VAN A",
+    "template": "compact2"
+  },
+  "categories": [
+    { "id": "all", "name": "Tất cả" },
+    { "id": "tool", "name": "Tool & Tiện Ích" },
+    { "id": "license", "name": "Bản Quyền OS/App" }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Windows 11 Pro Retail Key",
+      "category": "license",
+      "price": 150000,
+      "desc": "Key bản quyền vĩnh viễn, kích hoạt 1 máy.",
+      "tag": "Bán chạy"
+    },
+    {
+      "id": 2,
+      "name": "Office 2024 Pro Plus Key",
+      "category": "license",
+      "price": 200000,
+      "desc": "Bản quyền trọn đời, tải trực tiếp từ Microsoft.",
+      "tag": "Hot"
+    },
+    {
+      "id": 3,
+      "name": "Auto Tool Automator Pro (1 Tháng)",
+      "category": "tool",
+      "price": 120000,
+      "desc": "Tool tự động hóa tác vụ hệ điều hành, multi-thread.",
+      "tag": "New"
+    },
+    {
+      "id": 4,
+      "name": "JetBrains All Products Pack (1 Năm)",
+      "category": "license",
+      "price": 350000,
+      "desc": "Kích hoạt chính chủ qua email tài khoản.",
+      "tag": "Ưu đãi"
+    },
+    {
+      "id": 5,
+      "name": "Network Packet Inspector Bot",
+      "category": "tool",
+      "price": 180000,
+      "desc": "Phân tích luồng network và giám sát server riêng.",
+      "tag": "Pro"
+    },
+    {
+      "id": 6,
+      "name": "Canva Pro vĩnh viễn (Edu Team)",
+      "category": "license",
+      "price": 90000,
+      "desc": "Nâng cấp trực tiếp trên tài khoản cá nhân.",
+      "tag": "Tiết kiệm"
+    }
+  ]
+}
