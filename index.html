@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Store | Cửa Hàng Sản Phẩm Số & Bản Quyền Phần Mềm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(18, 24, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glow { box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xl glow">Z</div>
+                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Z-STORE</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#products" class="hover:text-indigo-400 transition">Sản phẩm</a>
+                <a href="#features" class="hover:text-indigo-400 transition">Tính năng</a>
+                <a href="#faq" class="hover:text-indigo-400 transition">Hỏi đáp</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-cart-shopping text-indigo-400"></i>
+                    <span id="cart-count" class="absolute -top-1.5 -right-1.5 bg-indigo-600 text-xs px-1.5 py-0.5 rounded-full font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative py-20 px-4 text-center overflow-hidden">
+        <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-30">
+            <div class="w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[140px]"></div>
+        </div>
+        <div class="max-w-3xl mx-auto space-y-6">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <i class="fa-solid fa-bolt text-indigo-400"></i> Hệ Thống Giao Key & Tài Khoản Tự Động 24/7
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                Kho Bản Quyền Số & Phần Mềm <span class="bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Uy Tín Hàng Đầu</span>
+            </h1>
+            <p class="text-slate-400 text-lg">Bảo hành trọn đời, hỗ trợ kỹ thuật tức thì, thanh toán tự động qua QR Code ngân hàng & tiền số.</p>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="max-w-7xl mx-auto px-4 py-12 flex-1">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold">Danh Mục Bản Quyền & Dịch Vụ</h2>
+            <div class="flex gap-2">
+                <button onclick="filterCategory('all')" class="cat-btn active px-4 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white">Tất cả</button>
+                <button onclick="filterCategory('tool')" class="cat-btn px-4 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Tool & Tiện Ích</button>
+                <button onclick="filterCategory('license')" class="cat-btn px-4 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Bản Quyền OS/App</button>
+            </div>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="w-full max-w-md bg-slate-900 border-l border-slate-800 h-full p-6 flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                <h3 class="font-bold text-lg">Giỏ Hàng</h3>
+                <button onclick="toggleCart()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto py-4 space-y-4"></div>
+            <div class="border-t border-slate-800 pt-4 space-y-4">
+                <div class="flex justify-between font-bold">
+                    <span>Tổng tiền:</span>
+                    <span id="cart-total" class="text-indigo-400">0đ</span>
+                </div>
+                <button onclick="openCheckout()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition">Thanh Toán Ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-lg">Xác Nhận Đơn Hàng</h3>
+                <button onclick="closeCheckout()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Email nhận Key / Tài khoản</label>
+                    <input type="email" id="customer-email" placeholder="email@example.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-3">
+                    <p class="text-xs text-slate-400">Quét mã VietQR chuyển khoản tự động</p>
+                    <img id="qr-code" src="https://api.vietqr.io/image/970422-000000000-compact2.png" alt="QR Code" class="mx-auto rounded-lg w-48 border border-slate-800">
+                    <p class="text-xs font-mono text-indigo-400">Nội dung: <span id="payment-memo" class="font-bold">DH123456</span></p>
+                </div>
+            </div>
+            <button onclick="confirmOrder()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition">Tôi Đã Thanh Toán</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-slate-800 py-8 mt-12 text-center text-xs text-slate-500">
+        <p>© 2026 Z-Store. Hosted on GitHub Pages. Giao hàng tự động qua API.</p>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name: "Windows 11 Pro Retail Key", category: "license", price: 150000, desc: "Key bản quyền vĩnh viễn, kích hoạt 1 máy.", tag: "Bán chạy" },
+            { id: 2, name: "Office 2024 Pro Plus Key", category: "license", price: 200000, desc: "Bản quyền trọn đời, tải trực tiếp từ Microsoft.", tag: "Hot" },
+            { id: 3, name: "Auto Tool Automator Pro (1 Tháng)", category: "tool", price: 120000, desc: "Tool tự động hóa tác vụ hệ điều hành, multi-thread.", tag: "New" },
+            { id: 4, name: "JetBrains All Products Pack (1 Năm)", category: "license", price: 350000, desc: "Kích hoạt chính chủ qua email tài khoản.", tag: "Ưu đãi" },
+            { id: 5, name: "Network Packet Inspector Bot", category: "tool", price: 180000, desc: "Phân tích luồng network và giám sát server riêng.", tag: "Pro" },
+            { id: 6, name: "Canva Pro vĩnh viễn (Edu Team)", category: "license", price: 90000, desc: "Nâng cấp trực tiếp trên tài khoản cá nhân.", tag: "Tiết kiệm" }
+        ];
+
+        let cart = [];
+
+        function renderProducts(cat = 'all') {
+            const grid = document.getElementById('product-grid');
+            const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+            grid.innerHTML = filtered.map(p => `
+                <div class="glass p-6 rounded-2xl flex flex-col justify-between hover:border-indigo-500/50 transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-400 font-semibold border border-indigo-500/20">${p.tag}</span>
+                            <span class="text-lg font-bold text-indigo-400">${p.price.toLocaleString()}đ</span>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">${p.name}</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">${p.desc}</p>
+                    </div>
+                    <button onclick="addToCart(${p.id})" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-indigo-600 hover:border-transparent font-semibold text-sm transition">
+                        Thêm vào giỏ
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            cart.push(item);
+            updateCart();
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const items = document.getElementById('cart-items');
+            items.innerHTML = cart.map((p, idx) => `
+                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div>
+                        <div class="font-semibold text-sm">${p.name}</div>
+                        <div class="text-xs text-indigo-400">${p.price.toLocaleString()}đ</div>
+                    </div>
+                    <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+            const total = cart.reduce((acc, c) => acc + c.price, 0);
+            document.getElementById('cart-total').innerText = total.toLocaleString() + 'đ';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('hidden');
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) return alert('Giỏ hàng đang trống!');
+            const memo = 'Z' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('payment-memo').innerText = memo;
+            document.getElementById('cart-drawer').classList.add('hidden');
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function confirmOrder() {
+            const email = document.getElementById('customer-email').value;
+            if (!email) return alert('Vui lòng nhập email nhận key!');
+            alert('Đã gửi yêu cầu xác nhận đơn hàng tới hệ thống! Key bản quyền sẽ được chuyển tới: ' + email);
+            cart = [];
+            updateCart();
+            closeCheckout();
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-indigo-600', 'text-white');
+                b.classList.add('bg-slate-900', 'border', 'border-slate-800', 'text-slate-300');
+            });
+            event.target.classList.add('bg-indigo-600', 'text-white');
+            event.target.classList.remove('bg-slate-900', 'border-slate-800', 'text-slate-300');
+            renderProducts(cat);
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
