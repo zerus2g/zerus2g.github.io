@@ -1,145 +1,558 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="meta-title">Z-Store | Cửa Hàng Bản Quyền Số</title>
+    <title id="meta-title">Z-STORE | Nền Tảng Bản Quyền Số & Phần Mềm Uy Tín Số 1</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 Pro -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(18, 24, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glow { box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4); }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .glow-indigo {
+            box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.35);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #38bdf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradientMove 8s ease infinite;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer::after {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0,
+                rgba(255, 255, 255, 0.05) 20%,
+                rgba(255, 255, 255, 0.1) 60%,
+                rgba(255, 255, 255, 0)
+            );
+            animation: shimmer 3s infinite;
+            content: '';
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 glass border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xl glow">Z</div>
-                <span id="brand-name" class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Z-STORE</span>
-            </div>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-                <a href="#products" class="hover:text-indigo-400 transition">Sản phẩm</a>
-                <a id="link-telegram" href="#" target="_blank" class="hover:text-indigo-400 transition flex items-center gap-1.5"><i class="fa-brands fa-telegram"></i> Telegram</a>
-                <a id="link-discord" href="#" target="_blank" class="hover:text-indigo-400 transition flex items-center gap-1.5"><i class="fa-brands fa-discord"></i> Discord</a>
+    <!-- Top Announcement Bar (Flash Sale / Promo) -->
+    <div id="top-announcement" class="bg-gradient-to-r from-indigo-900 via-indigo-700 to-purple-900 py-2 px-4 text-xs font-semibold text-center flex items-center justify-center gap-3 relative z-50 shadow-md">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/20 text-white text-[11px] font-bold">
+            <i class="fa-solid fa-fire text-amber-300"></i> FLASH SALE
+        </span>
+        <span id="announcement-text" class="truncate max-w-xl">Giảm thêm 20% hôm nay cho mọi đơn hàng. Mã giảm giá: <strong class="underline cursor-pointer" onclick="copyPromo('ZSTORE2026')">ZSTORE2026</strong></span>
+        <div class="hidden md:flex items-center gap-1.5 font-mono text-[11px] bg-black/30 px-2 py-0.5 rounded">
+            <span>Kết thúc sau:</span>
+            <span id="sale-timer" class="font-bold text-amber-300">03:42:18</span>
+        </div>
+        <button onclick="document.getElementById('top-announcement').style.display='none'" class="absolute right-4 text-white/70 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
+            <!-- Brand -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition duration-300">
+                    Z
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span id="brand-name" class="text-2xl font-black tracking-tight gradient-text">Z-STORE</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold uppercase flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Auto API
+                        </span>
+                    </div>
+                    <p class="text-[10px] text-slate-400 font-medium">Bản Quyền Số & Phần Mềm Cao Cấp</p>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-300">
+                <a href="#products" class="hover:text-indigo-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-layer-group text-xs text-indigo-400"></i> Sản phẩm
+                </a>
+                <a href="#features" class="hover:text-indigo-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-xs text-indigo-400"></i> Vì sao chọn Z-Store
+                </a>
+                <a href="#testimonials" class="hover:text-indigo-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-star text-xs text-amber-400"></i> Đánh giá
+                </a>
+                <a href="#faq" class="hover:text-indigo-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-question text-xs text-indigo-400"></i> Hỏi đáp
+                </a>
+                <button onclick="openLookupModal()" class="hover:text-indigo-400 transition flex items-center gap-1.5 text-cyan-400">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i> Tra cứu Key
+                </button>
             </nav>
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleCart()" class="relative p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500 transition">
-                    <i class="fa-solid fa-cart-shopping text-indigo-400"></i>
-                    <span id="cart-count" class="absolute -top-1.5 -right-1.5 bg-indigo-600 text-xs px-1.5 py-0.5 rounded-full font-bold">0</span>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-3">
+                <div class="hidden sm:flex items-center gap-2">
+                    <a id="link-telegram" href="#" target="_blank" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500 flex items-center justify-center text-slate-300 hover:text-indigo-400 transition" title="Kênh Telegram">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a id="link-discord" href="#" target="_blank" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500 flex items-center justify-center text-slate-300 hover:text-indigo-400 transition" title="Máy chủ Discord">
+                        <i class="fa-brands fa-discord"></i>
+                    </a>
+                </div>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCart()" class="relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition duration-200">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="hidden sm:inline">Giỏ hàng</span>
+                    <span id="cart-count" class="bg-white text-indigo-700 text-xs px-2 py-0.5 rounded-full font-black">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="relative py-20 px-4 text-center overflow-hidden">
-        <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-30">
-            <div class="w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[140px]"></div>
+    <!-- Hero Section -->
+    <section class="relative pt-16 pb-24 px-4 text-center overflow-hidden">
+        <!-- Ambient Glowing Background Orbs -->
+        <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-30 pointer-events-none">
+            <div class="w-[700px] h-[700px] bg-indigo-600 rounded-full blur-[160px] -translate-y-24"></div>
+            <div class="w-[500px] h-[500px] bg-cyan-500 rounded-full blur-[140px] translate-x-48 translate-y-24"></div>
         </div>
-        <div class="max-w-3xl mx-auto space-y-6">
-            <span id="hero-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                <i class="fa-solid fa-bolt text-indigo-400"></i> Hệ Thống Giao Key & Tài Khoản Tự Động 24/7
-            </span>
-            <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                Kho Bản Quyền Số & Phần Mềm Uy Tín
+
+        <div class="max-w-4xl mx-auto space-y-8">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-inner">
+                <i class="fa-solid fa-bolt text-amber-400"></i> <span id="hero-badge">HỆ THỐNG GIAO KEY & TÀI KHOẢN TỰ ĐỘNG 24/7 QUA API</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
+                Kho Bản Quyền Số & Phần Mềm <br>
+                <span class="gradient-text">Uy Tín Số 1 Việt Nam</span>
             </h1>
-            <p id="hero-desc" class="text-slate-400 text-lg">Bảo hành trọn đời, hỗ trợ kỹ thuật tức thì, thanh toán tự động qua QR Code ngân hàng & tiền số.</p>
+
+            <!-- Subtitle -->
+            <p id="hero-desc" class="text-slate-400 text-base sm:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
+                Kích hoạt tức thì trong 30 giây. Cam kết 100% bản quyền chính hãng, bảo hành 1-đổi-1 trọn đời, hỗ trợ kỹ thuật Ultraviewer trực tiếp.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <a href="#products" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:opacity-95 font-extrabold text-white text-base shadow-xl shadow-indigo-600/30 flex items-center gap-3 transition transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-bolt text-amber-300"></i> Xem Danh Mục Sản Phẩm
+                </a>
+                <button onclick="openLookupModal()" class="px-7 py-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 font-bold text-slate-300 hover:text-white text-base flex items-center gap-2 transition">
+                    <i class="fa-solid fa-receipt text-cyan-400"></i> Tra Cứu Key Đã Mua
+                </button>
+            </div>
+
+            <!-- Trust Bar / Micro Proof -->
+            <div class="pt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-semibold text-slate-400">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+                    <span>Bảo hành 1-đổi-1 vĩnh viễn</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-400 text-sm"></i>
+                    <span>Giao Key tự động 15s</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-headset text-indigo-400 text-sm"></i>
+                    <span>Hỗ trợ kỹ thuật 24/7</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-qrcode text-cyan-400 text-sm"></i>
+                    <span>VietQR chuẩn Napas 247</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Products -->
-    <section id="products" class="max-w-7xl mx-auto px-4 py-12 flex-1">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <h2 class="text-2xl font-bold">Danh Mục Bản Quyền & Dịch Vụ</h2>
-            <div id="category-container" class="flex flex-wrap gap-2"></div>
+    <!-- Stats Counter Banner -->
+    <section class="max-w-7xl mx-auto px-4 pb-16 w-full">
+        <div id="stats-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 glass-card rounded-3xl border border-slate-800">
+            <!-- Rendered dynamically -->
+        </div>
+    </section>
+
+    <!-- Product Catalog Section -->
+    <section id="products" class="max-w-7xl mx-auto px-4 py-12 flex-1 w-full">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-slate-800">
+            <div>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-400">Bản Quyền Đã Kiểm Định</span>
+                <h2 class="text-3xl font-black mt-1">Danh Mục Sản Phẩm Nổi Bật</h2>
+                <p class="text-xs text-slate-400 mt-1">Chọn gói bản quyền hoặc phần mềm tiện ích phù hợp với nhu cầu của bạn</p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div class="relative min-w-[240px]">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="product-search" oninput="handleSearch()" placeholder="Tìm kiếm sản phẩm, key..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <select id="sort-select" onchange="handleSort()" class="px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 font-semibold focus:outline-none focus:border-indigo-500">
+                    <option value="featured">🔥 Nổi bật nhất</option>
+                    <option value="price-asc">💵 Giá: Thấp đến cao</option>
+                    <option value="price-desc">💎 Giá: Cao đến thấp</option>
+                    <option value="rating">⭐ Đánh giá cao nhất</option>
+                </select>
+            </div>
         </div>
 
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <!-- Category Tabs -->
+        <div id="category-container" class="flex flex-wrap gap-2.5 mb-8"></div>
+
+        <!-- Products Grid -->
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
+
+    <!-- Why Choose Us / Trust Features -->
+    <section id="features" class="max-w-7xl mx-auto px-4 py-16 w-full">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-400">Cam Kết Chất Lượng</span>
+            <h2 class="text-3xl sm:text-4xl font-black">Tại Sao Hơn 30,000+ Khách Hàng Chọn Z-Store?</h2>
+            <p class="text-slate-400 text-sm">Chúng tôi xây dựng hệ thống tự động hóa hoàn toàn từ thanh toán tới kích hoạt phần mềm với tiêu chuẩn bảo mật ngân hàng.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-3xl space-y-4 hover:border-indigo-500/50 transition">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-2xl font-black">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <h3 class="font-bold text-lg">Giao Key Tự Động Trong 15 Giây</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Hệ thống tích hợp webhook ngân hàng thông minh. Ngay sau khi bạn quét mã QR, bot tự động cấp phát key bản quyền và gửi vào email của bạn ngay lập tức.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl space-y-4 hover:border-indigo-500/50 transition">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl font-black">
+                    <i class="fa-solid fa-shield-check"></i>
+                </div>
+                <h3 class="font-bold text-lg">Bảo Hành 1-Đổi-1 Trọn Đời</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Cam kết hoàn tiền 100% hoặc đổi key mới tức thì nếu gặp bất kỳ lỗi nào trong quá trình kích hoạt. Không để khách hàng chịu rủi ro.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl space-y-4 hover:border-indigo-500/50 transition">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl font-black">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <h3 class="font-bold text-lg">Hỗ Trợ Ultraviewer Cài Đặt 1:1</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Đội ngũ kỹ thuật viên trực tuyến 24/7 sẵn sàng hỗ trợ bạn qua Ultraviewer, AnyDesk hoặc Telegram từ A-Z nếu bạn không thạo kỹ thuật.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section id="testimonials" class="max-w-7xl mx-auto px-4 py-16 w-full border-t border-slate-800/80">
+        <div class="text-center max-w-2xl mx-auto mb-14 space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-400">Đánh Giá Thực Tế</span>
+            <h2 class="text-3xl font-black">Cảm Nhận Từ Khách Hàng Đã Mua</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+            <div class="glass-card p-6 rounded-2xl space-y-3">
+                <div class="flex items-center gap-1 text-amber-400 text-sm">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-slate-300 leading-relaxed">"Mua key Win 11 Pro quét QR xong đúng 10 giây sau có mail luôn. Kích hoạt thẳng trong Settings nhận bản quyền digital vĩnh viễn. Quá uy tín!"</p>
+                <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-slate-400">
+                    <span class="font-bold text-white">Hoàng Nam (IT Dev)</span>
+                    <span class="text-[10px]">Đã mua Win 11 Pro</span>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl space-y-3">
+                <div class="flex items-center gap-1 text-amber-400 text-sm">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-slate-300 leading-relaxed">"Gói JetBrains kích hoạt chính chủ qua email tài khoản luôn, dùng được cả PyCharm lẫn WebStorm cho công việc. Tiết kiệm được cả triệu bạc mỗi năm."</p>
+                <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-slate-400">
+                    <span class="font-bold text-white">Minh Quang</span>
+                    <span class="text-[10px]">Đã mua JetBrains All</span>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl space-y-3">
+                <div class="flex items-center gap-1 text-amber-400 text-sm">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-slate-300 leading-relaxed">"Lúc đầu mình nhập nhầm mail, nhắn admin qua Telegram hỗ trợ trong vòng 2 phút đã check và gửi lại key. Dịch vụ support đỉnh chóp!"</p>
+                <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-slate-400">
+                    <span class="font-bold text-white">Thùy Linh</span>
+                    <span class="text-[10px]">Đã mua Office 2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="max-w-4xl mx-auto px-4 py-16 w-full">
+        <div class="text-center mb-12 space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-400">Giải Đáp Thắc Mắc</span>
+            <h2 class="text-3xl font-black">Câu Hỏi Thường Gặp (FAQ)</h2>
+        </div>
+
+        <div id="faq-container" class="space-y-4"></div>
+    </section>
+
+    <!-- Floating Live Purchase Social Proof Toast -->
+    <div id="social-proof-toast" class="fixed bottom-6 left-6 z-40 max-w-sm glass-card p-4 rounded-2xl border border-indigo-500/30 shadow-2xl flex items-center gap-3 transition-all duration-500 transform translate-y-24 opacity-0 pointer-events-none">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <div class="text-xs">
+            <p class="text-slate-200"><strong id="sp-user" class="text-indigo-400">0985***821</strong> vừa mua thành công</p>
+            <p id="sp-product" class="font-bold text-white truncate max-w-[200px]">Windows 11 Pro Key</p>
+            <span id="sp-time" class="text-[10px] text-slate-400">1 phút trước</span>
+        </div>
+    </div>
 
     <!-- Cart Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
-        <div class="w-full max-w-md bg-slate-900 border-l border-slate-800 h-full p-6 flex flex-col">
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex justify-end transition-opacity">
+        <div class="w-full max-w-md bg-slate-900 border-l border-slate-800 h-full p-6 flex flex-col shadow-2xl">
+            <!-- Drawer Header -->
             <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                <h3 class="font-bold text-lg">Giỏ Hàng</h3>
-                <button onclick="toggleCart()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <div id="cart-items" class="flex-1 overflow-y-auto py-4 space-y-4"></div>
-            <div class="border-t border-slate-800 pt-4 space-y-4">
-                <div class="flex justify-between font-bold">
-                    <span>Tổng tiền:</span>
-                    <span id="cart-total" class="text-indigo-400">0đ</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-indigo-400"></i>
+                    <h3 class="font-bold text-lg">Giỏ Hàng Của Bạn</h3>
                 </div>
-                <button onclick="openCheckout()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition">Thanh Toán Ngay</button>
+                <button onclick="toggleCart()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Cart Item List -->
+            <div id="cart-items" class="flex-1 overflow-y-auto py-4 space-y-3"></div>
+
+            <!-- Promo Code Input -->
+            <div class="pt-4 border-t border-slate-800 space-y-3">
+                <div class="flex gap-2">
+                    <input type="text" id="cart-coupon" placeholder="Mã giảm giá (VD: ZSTORE2026)" class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white uppercase focus:border-indigo-500 focus:outline-none">
+                    <button onclick="applyCoupon()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl transition">Áp dụng</button>
+                </div>
+                <div id="coupon-alert" class="text-[11px] hidden"></div>
+
+                <!-- Subtotals -->
+                <div class="space-y-1.5 text-xs text-slate-400">
+                    <div class="flex justify-between">
+                        <span>Tạm tính:</span>
+                        <span id="sub-total" class="text-white font-medium">0đ</span>
+                    </div>
+                    <div id="discount-row" class="flex justify-between text-emerald-400 hidden">
+                        <span>Giảm giá (Coupon):</span>
+                        <span id="discount-amount">-0đ</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-sm text-white pt-2 border-t border-slate-800">
+                        <span>Tổng thanh toán:</span>
+                        <span id="cart-total" class="text-indigo-400 text-lg font-black">0đ</span>
+                    </div>
+                </div>
+
+                <!-- Checkout Button -->
+                <button onclick="openCheckout()" class="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 rounded-xl font-extrabold text-sm text-white shadow-lg shadow-indigo-600/30 transition">
+                    Tiến Hành Thanh Toán Ngay
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
-            <div class="flex items-center justify-between">
-                <h3 class="font-bold text-lg">Xác Nhận Đơn Hàng</h3>
-                <button onclick="closeCheckout()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- Checkout Modal with VietQR -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="max-w-lg w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button onclick="closeCheckout()" class="absolute right-5 top-5 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Cổng Thanh Toán Tự Động</span>
+                <h3 class="font-black text-2xl text-white">Quét Mã VietQR Nhận Key</h3>
+                <p class="text-xs text-slate-400">Vui lòng chuyển khoản đúng số tiền và nội dung để hệ thống tự động duyệt</p>
             </div>
+
+            <!-- Form -->
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Email nhận Key / Bản quyền</label>
-                    <input type="email" id="customer-email" placeholder="email@example.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">Email nhận Key / Bản quyền <span class="text-rose-500">*</span></label>
+                    <input type="email" id="customer-email" placeholder="Nhập chính xác email của bạn..." class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500">
                 </div>
-                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-3">
-                    <p class="text-xs text-slate-400">Quét mã VietQR chuyển khoản tự động</p>
-                    <img id="qr-code" src="" alt="QR Code" class="mx-auto rounded-lg w-48 border border-slate-800 bg-white p-2">
-                    <p class="text-xs text-slate-300">Chủ TK: <span id="payment-accname" class="font-bold text-white uppercase"></span></p>
-                    <p class="text-xs font-mono text-indigo-400">Nội dung: <span id="payment-memo" class="font-bold"></span></p>
+
+                <!-- QR Display -->
+                <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-4">
+                    <div class="relative inline-block bg-white p-3 rounded-2xl shadow-xl">
+                        <img id="qr-code" src="" alt="VietQR" class="w-48 h-48 mx-auto object-contain">
+                        <div class="absolute inset-x-0 -bottom-2 text-center">
+                            <span class="text-[9px] font-black uppercase bg-indigo-600 text-white px-2 py-0.5 rounded-full shadow">Napas 247 Auto</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs text-left pt-2 border-t border-slate-900">
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-slate-500 block text-[10px]">Chủ tài khoản:</span>
+                            <span id="payment-accname" class="font-bold text-white uppercase truncate block"></span>
+                        </div>
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <span class="text-slate-500 block text-[10px]">Số tài khoản:</span>
+                                <span id="payment-accno" class="font-mono font-bold text-white"></span>
+                            </div>
+                            <button onclick="copyText('payment-accno')" class="text-indigo-400 hover:text-indigo-300 p-1"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Payment memo row -->
+                    <div class="bg-indigo-950/40 border border-indigo-500/30 p-3 rounded-xl flex items-center justify-between text-xs">
+                        <div class="text-left">
+                            <span class="text-indigo-300 block text-[10px] font-semibold">Nội dung chuyển khoản (bắt buộc):</span>
+                            <span id="payment-memo" class="font-mono font-extrabold text-amber-300 text-base"></span>
+                        </div>
+                        <button onclick="copyText('payment-memo')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white font-bold text-xs flex items-center gap-1 transition">
+                            <i class="fa-regular fa-copy"></i> Sao chép
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-clock text-amber-400"></i> Mã QR có hiệu lực trong: <span id="qr-timer" class="font-mono font-bold text-amber-400">14:59</span>
+                    </div>
                 </div>
             </div>
-            <button onclick="confirmOrder()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition">Tôi Đã Thanh Toán</button>
+
+            <!-- Complete Action -->
+            <div class="space-y-2">
+                <button onclick="confirmOrder()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold text-white transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30">
+                    <i class="fa-solid fa-circle-check"></i> Tôi Đã Hoàn Tất Chuyển Khoản
+                </button>
+                <p class="text-center text-[10px] text-slate-500">Hệ thống sẽ tự động quét và trả kết quả sau 5-15 giây</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key & Order Lookup Modal -->
+    <div id="lookup-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl relative">
+            <button onclick="closeLookupModal()" class="absolute right-5 top-5 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div>
+                <h3 class="font-black text-xl text-white">Tra Cứu Key Đã Mua</h3>
+                <p class="text-xs text-slate-400 mt-1">Nhập Email hoặc Mã Đơn Hàng bạn đã thanh toán</p>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <input type="text" id="lookup-input" placeholder="VD: email@gmail.com hoặc Z123456" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <button onclick="performLookup()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-white transition">
+                    Tìm Kiếm Đơn Hàng
+                </button>
+                <div id="lookup-result" class="pt-2 hidden space-y-3"></div>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="glass border-t border-slate-800 py-8 mt-12 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer class="glass border-t border-slate-800/80 py-12 mt-20 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-white text-base">Z</div>
+                    <span class="text-lg font-black text-white">Z-STORE</span>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed" id="footer-desc">
+                    Hệ thống cung cấp phần mềm, công cụ tiện ích và key bản quyền số tự động hàng đầu với chế độ bảo hành 1-đổi-1.
+                </p>
+                <div class="flex items-center gap-3 pt-2">
+                    <span class="text-xs font-semibold text-slate-300">Kết nối:</span>
+                    <a id="f-telegram" href="#" target="_blank" class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-indigo-400"><i class="fa-brands fa-telegram"></i></a>
+                    <a id="f-discord" href="#" target="_blank" class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-indigo-400"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-sm text-white">Sản Phẩm & Dịch Vụ</h4>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                    <li><a href="#products" class="hover:text-white transition">Windows 11 / 10 Pro</a></li>
+                    <li><a href="#products" class="hover:text-white transition">Microsoft Office 2024 / 365</a></li>
+                    <li><a href="#products" class="hover:text-white transition">JetBrains Full Pack License</a></li>
+                    <li><a href="#products" class="hover:text-white transition">Canva Pro Email Chính Chủ</a></li>
+                    <li><a href="#products" class="hover:text-white transition">Tool Tự Động Hóa Windows</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-sm text-white">Chính Sách & Hỗ Trợ</h4>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                    <li><a href="#" class="hover:text-white transition">Chính sách bảo hành 1-đổi-1</a></li>
+                    <li><a href="#" class="hover:text-white transition">Quy trình giao hàng tự động</a></li>
+                    <li><a href="#" class="hover:text-white transition">Bảo mật thông tin khách hàng</a></li>
+                    <li><a href="#" class="hover:text-white transition">Hướng dẫn thanh toán VietQR</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-sm text-white">Chứng Nhận Bảo Mật</h4>
+                <div class="flex flex-wrap gap-2 text-[11px]">
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-emerald-400 flex items-center gap-1">
+                        <i class="fa-solid fa-lock"></i> SSL 256-bit
+                    </span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-indigo-400 flex items-center gap-1">
+                        <i class="fa-solid fa-qrcode"></i> VietQR Napas
+                    </span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 flex items-center gap-1">
+                        <i class="fa-solid fa-bolt"></i> API Instant
+                    </span>
+                </div>
+                <div class="pt-2">
+                    <a href="admin.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-indigo-500 text-slate-400 hover:text-white transition text-[11px]">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Bảng điều khiển Quản trị viên
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
             <p id="footer-text">© 2026 Z-Store. Hosted on GitHub Pages.</p>
-            <a href="admin.html" class="text-slate-400 hover:text-indigo-400 flex items-center gap-1">
-                <i class="fa-solid fa-lock text-[10px]"></i> Quản trị viên
-            </a>
+            <p>Thiết kế cho hiệu năng cao & tối ưu chuyển đổi.</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        let storeData = {
-            site: {
-                name: "Z-STORE",
-                badge: "Hệ Thống Giao Key & Tài Khoản Tự Động 24/7",
-                title: "Kho Bản Quyền Số & Phần Mềm Uy Tín Hàng Đầu",
-                description: "Bảo hành trọn đời, hỗ trợ kỹ thuật tức thì, thanh toán tự động qua QR Code ngân hàng & tiền số.",
-                telegram: "#",
-                discord: "#",
-                footer: "© 2026 Z-Store. Hosted on GitHub Pages. Giao hàng tự động qua API."
-            },
-            payment: {
-                bankId: "970422",
-                accountNo: "000000000",
-                accountName: "NGUYEN VAN A",
-                template: "compact2"
-            },
-            categories: [
-                { id: "all", name: "Tất cả" },
-                { id: "tool", name: "Tool & Tiện Ích" },
-                { id: "license", name: "Bản Quyền OS/App" }
-            ],
-            products: []
-        };
-
+        let storeData = null;
         let cart = [];
         let currentCategory = 'all';
+        let searchQuery = '';
+        let discountPercent = 0;
+        let qrInterval = null;
 
         async function initStore() {
             try {
@@ -148,68 +561,211 @@
                     storeData = await res.json();
                 }
             } catch (err) {
-                console.warn('Load store.json fallback:', err);
+                console.warn('Fallback store load failed', err);
             }
 
-            renderSiteInfo();
+            renderHeaderAndHero();
+            renderStats();
             renderCategories();
             renderProducts();
+            renderFaqs();
+            initSocialProof();
+            startSaleCountdown();
         }
 
-        function renderSiteInfo() {
+        function renderHeaderAndHero() {
+            if (!storeData) return;
             const s = storeData.site;
-            if (!s) return;
-            document.getElementById('meta-title').innerText = `${s.name} | ${s.title}`;
-            document.getElementById('brand-name').innerText = s.name;
-            document.getElementById('hero-badge').innerHTML = `<i class="fa-solid fa-bolt text-indigo-400"></i> ${s.badge}`;
-            document.getElementById('hero-title').innerText = s.title;
-            document.getElementById('hero-desc').innerText = s.description;
-            if (s.telegram) document.getElementById('link-telegram').href = s.telegram;
-            if (s.discord) document.getElementById('link-discord').href = s.discord;
-            if (s.footer) document.getElementById('footer-text').innerText = s.footer;
+            if (s) {
+                document.getElementById('meta-title').innerText = `${s.name} | ${s.title}`;
+                document.getElementById('brand-name').innerText = s.name;
+                document.getElementById('hero-badge').innerText = s.badge;
+                document.getElementById('hero-desc').innerText = s.description;
+                if (s.telegram) {
+                    document.getElementById('link-telegram').href = s.telegram;
+                    document.getElementById('f-telegram').href = s.telegram;
+                }
+                if (s.discord) {
+                    document.getElementById('link-discord').href = s.discord;
+                    document.getElementById('f-discord').href = s.discord;
+                }
+                if (s.footer) document.getElementById('footer-text').innerText = s.footer;
+            }
+
+            const m = storeData.marketing;
+            if (m && m.announcement) {
+                document.getElementById('announcement-text').innerHTML = m.announcement;
+            }
+        }
+
+        function renderStats() {
+            const container = document.getElementById('stats-grid');
+            const stats = (storeData && storeData.marketing && storeData.marketing.stats) || [
+                { label: "Key Đã Bán", value: "32,800+", icon: "fa-key" },
+                { label: "Khách Hài Lòng", value: "99.8%", icon: "fa-face-smile" },
+                { label: "Nhận Key", value: "< 15 Giây", icon: "fa-bolt" },
+                { label: "Hỗ Trợ", value: "24/7/365", icon: "fa-headset" }
+            ];
+
+            container.innerHTML = stats.map(st => `
+                <div class="flex items-center gap-4 p-2">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl shrink-0 border border-indigo-500/20">
+                        <i class="fa-solid ${st.icon}"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black text-white tracking-tight">${st.value}</div>
+                        <div class="text-xs text-slate-400 font-medium">${st.label}</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function renderCategories() {
             const container = document.getElementById('category-container');
-            if (!storeData.categories) return;
-            container.innerHTML = storeData.categories.map(c => `
-                <button onclick="filterCategory('${c.id}')" class="cat-btn px-4 py-1.5 text-xs font-semibold rounded-lg transition ${c.id === currentCategory ? 'bg-indigo-600 text-white' : 'bg-slate-900 border border-slate-800 text-slate-300'}">
+            const cats = (storeData && storeData.categories) || [
+                { id: "all", name: "🔥 Tất Cả Sản Phẩm" },
+                { id: "license", name: "💻 Bản Quyền OS / Office" },
+                { id: "tool", name: "⚙️ Tool & Tự Động Hóa" },
+                { id: "dev", name: "👨‍💻 Developer & Đồ Họa" }
+            ];
+
+            container.innerHTML = cats.map(c => `
+                <button onclick="filterCategory('${c.id}')" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${c.id === currentCategory ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-700'}">
                     ${c.name}
                 </button>
             `).join('');
         }
 
-        function renderProducts(cat = currentCategory) {
-            currentCategory = cat;
+        function renderProducts() {
             const grid = document.getElementById('product-grid');
-            const prods = storeData.products || [];
-            const filtered = cat === 'all' ? prods : prods.filter(p => p.category === cat);
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">Chưa có sản phẩm nào trong mục này.</div>`;
+            let prods = (storeData && storeData.products) || [];
+
+            // Category filter
+            if (currentCategory !== 'all') {
+                prods = prods.filter(p => p.category === currentCategory);
+            }
+
+            // Search filter
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                prods = prods.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+            }
+
+            // Sorting
+            const sortVal = document.getElementById('sort-select').value;
+            if (sortVal === 'price-asc') prods.sort((a, b) => a.price - b.price);
+            else if (sortVal === 'price-desc') prods.sort((a, b) => b.price - a.price);
+            else if (sortVal === 'rating') prods.sort((a, b) => (b.rating || 5) - (a.rating || 5));
+
+            if (prods.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-500 text-sm">Không tìm thấy sản phẩm phù hợp.</div>`;
                 return;
             }
 
-            grid.innerHTML = filtered.map(p => `
-                <div class="glass p-6 rounded-2xl flex flex-col justify-between hover:border-indigo-500/50 transition">
+            grid.innerHTML = prods.map(p => {
+                const discount = p.originalPrice ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+                return `
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-indigo-500/40 transition duration-300 group relative">
+                    <!-- Top Badges -->
                     <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-400 font-semibold border border-indigo-500/20">${p.tag || 'Bản quyền'}</span>
-                            <span class="text-lg font-bold text-indigo-400">${p.price.toLocaleString()}đ</span>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[11px] font-extrabold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                                ${p.tag || 'Bản quyền'}
+                            </span>
+                            ${discount > 0 ? `<span class="text-[11px] font-black px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">-${discount}%</span>` : ''}
                         </div>
-                        <h3 class="font-bold text-lg mb-2">${p.name}</h3>
-                        <p class="text-xs text-slate-400 leading-relaxed mb-6">${p.desc}</p>
+
+                        <!-- Product Title -->
+                        <h3 class="font-extrabold text-lg text-white mb-2 group-hover:text-indigo-400 transition leading-snug">${p.name}</h3>
+                        
+                        <!-- Rating & Stock -->
+                        <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                            <div class="flex items-center gap-1 text-amber-400">
+                                <i class="fa-solid fa-star text-[11px]"></i>
+                                <span class="font-bold text-white">${p.rating || 5.0}</span>
+                                <span class="text-slate-500 text-[10px]">(${p.reviews || 100}+)</span>
+                            </div>
+                            <span class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> ${p.stock || 'Sẵn hàng'}
+                            </span>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="text-xs text-slate-400 leading-relaxed mb-5 line-clamp-2">${p.desc}</p>
+
+                        <!-- Features list -->
+                        ${p.features ? `
+                            <ul class="space-y-1.5 mb-6 text-[11px] text-slate-300 border-t border-slate-800/80 pt-3">
+                                ${p.features.slice(0, 4).map(f => `
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-indigo-400 text-[10px]"></i>
+                                        <span>${f}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        ` : ''}
                     </div>
-                    <button onclick="addToCart(${p.id})" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-indigo-600 hover:border-transparent font-semibold text-sm transition">
-                        Thêm vào giỏ
-                    </button>
+
+                    <!-- Price & CTA -->
+                    <div class="pt-4 border-t border-slate-800/80 space-y-3">
+                        <div class="flex items-baseline justify-between">
+                            <div>
+                                <span class="text-2xl font-black text-white tracking-tight">${p.price.toLocaleString()}đ</span>
+                                ${p.originalPrice ? `<span class="text-xs text-slate-500 line-through ml-2 font-medium">${p.originalPrice.toLocaleString()}đ</span>` : ''}
+                            </div>
+                            <span class="text-[10px] text-slate-400">Giao tự động 15s</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button onclick="addToCart(${p.id})" class="py-2.5 px-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500 text-slate-200 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cart-plus text-indigo-400"></i> Thêm giỏ
+                            </button>
+                            <button onclick="quickBuy(${p.id})" class="py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-1.5">
+                                Mua ngay <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            renderCategories();
+            renderProducts();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('product-search').value;
+            renderProducts();
+        }
+
+        function handleSort() {
+            renderProducts();
+        }
+
+        function renderFaqs() {
+            const container = document.getElementById('faq-container');
+            const faqs = (storeData && storeData.marketing && storeData.marketing.faqs) || [];
+            container.innerHTML = faqs.map((f, i) => `
+                <div class="glass-card rounded-2xl p-5 border border-slate-800 cursor-pointer" onclick="toggleFaq(${i})">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-white">${f.q}</h4>
+                        <i id="faq-icon-${i}" class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform"></i>
+                    </div>
+                    <div id="faq-answer-${i}" class="text-xs text-slate-400 leading-relaxed mt-3 pt-3 border-t border-slate-800/80 hidden">
+                        ${f.a}
+                    </div>
                 </div>
             `).join('');
         }
 
-        function filterCategory(cat) {
-            renderCategories();
-            renderProducts(cat);
+        function toggleFaq(i) {
+            const ans = document.getElementById(`faq-answer-${i}`);
+            const icon = document.getElementById(`faq-icon-${i}`);
+            ans.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
         }
 
         function addToCart(id) {
@@ -217,27 +773,61 @@
             if (item) {
                 cart.push(item);
                 updateCart();
+                showAddedNotification(item.name);
+            }
+        }
+
+        function quickBuy(id) {
+            const item = storeData.products.find(p => p.id === id);
+            if (item) {
+                cart = [item];
+                updateCart();
+                openCheckout();
             }
         }
 
         function updateCart() {
             document.getElementById('cart-count').innerText = cart.length;
             const items = document.getElementById('cart-items');
-            items.innerHTML = cart.map((p, idx) => `
-                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <div>
-                        <div class="font-semibold text-sm">${p.name}</div>
-                        <div class="text-xs text-indigo-400">${p.price.toLocaleString()}đ</div>
+
+            if (cart.length === 0) {
+                items.innerHTML = `
+                    <div class="py-16 text-center text-slate-500 text-xs">
+                        <i class="fa-solid fa-cart-shopping text-3xl mb-2 text-slate-700"></i>
+                        <p>Giỏ hàng của bạn đang trống</p>
                     </div>
-                    <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-red-400 text-xs"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `).join('');
-            const total = cart.reduce((acc, c) => acc + c.price, 0);
+                `;
+            } else {
+                items.innerHTML = cart.map((p, idx) => `
+                    <div class="flex items-center justify-between bg-slate-950 p-3 rounded-2xl border border-slate-800">
+                        <div class="min-w-0 pr-3">
+                            <h4 class="font-bold text-xs text-white truncate">${p.name}</h4>
+                            <span class="text-xs text-indigo-400 font-bold">${p.price.toLocaleString()}đ</span>
+                        </div>
+                        <button onclick="removeFromCart(${idx})" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 flex items-center justify-center transition">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            const sub = cart.reduce((acc, c) => acc + c.price, 0);
+            document.getElementById('sub-total').innerText = sub.toLocaleString() + 'đ';
+
+            const discount = Math.round(sub * (discountPercent / 100));
+            if (discount > 0) {
+                document.getElementById('discount-row').classList.remove('hidden');
+                document.getElementById('discount-amount').innerText = `-${discount.toLocaleString()}đ (${discountPercent}%)`;
+            } else {
+                document.getElementById('discount-row').classList.add('hidden');
+            }
+
+            const total = sub - discount;
             document.getElementById('cart-total').innerText = total.toLocaleString() + 'đ';
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
+        function removeFromCart(idx) {
+            cart.splice(idx, 1);
             updateCart();
         }
 
@@ -245,31 +835,188 @@
             document.getElementById('cart-drawer').classList.toggle('hidden');
         }
 
+        function applyCoupon() {
+            const code = document.getElementById('cart-coupon').value.trim().toUpperCase();
+            const alertBox = document.getElementById('coupon-alert');
+            alertBox.classList.remove('hidden');
+
+            if (code === 'ZSTORE2026' || code === 'VIP2026') {
+                discountPercent = 20;
+                alertBox.className = "text-[11px] text-emerald-400 font-semibold";
+                alertBox.innerText = `Áp dụng thành công! Đã giảm 20% cho đơn hàng.`;
+            } else {
+                discountPercent = 0;
+                alertBox.className = "text-[11px] text-rose-400 font-semibold";
+                alertBox.innerText = `Mã giảm giá không hợp lệ hoặc đã hết hạn!`;
+            }
+            updateCart();
+        }
+
         function openCheckout() {
             if (cart.length === 0) return alert('Giỏ hàng đang trống!');
-            const total = cart.reduce((acc, c) => acc + c.price, 0);
+            const sub = cart.reduce((acc, c) => acc + c.price, 0);
+            const discount = Math.round(sub * (discountPercent / 100));
+            const total = sub - discount;
+
             const memo = 'Z' + Math.floor(100000 + Math.random() * 900000);
             const pay = storeData.payment;
-            
+
             document.getElementById('payment-memo').innerText = memo;
             document.getElementById('payment-accname').innerText = pay.accountName;
+            document.getElementById('payment-accno').innerText = pay.accountNo;
+
             document.getElementById('qr-code').src = `https://api.vietqr.io/image/${pay.bankId}-${pay.accountNo}-${pay.template || 'compact2'}.png?amount=${total}&addInfo=${memo}&accountName=${encodeURIComponent(pay.accountName)}`;
-            
+
             document.getElementById('cart-drawer').classList.add('hidden');
             document.getElementById('checkout-modal').classList.remove('hidden');
+
+            startQrCountdown();
         }
 
         function closeCheckout() {
             document.getElementById('checkout-modal').classList.add('hidden');
+            if (qrInterval) clearInterval(qrInterval);
         }
 
         function confirmOrder() {
-            const email = document.getElementById('customer-email').value;
-            if (!email) return alert('Vui lòng nhập email nhận bản quyền!');
-            alert('Đã gửi yêu cầu xác nhận đơn hàng! Hệ thống sẽ xử lý và gửi key về: ' + email);
+            const email = document.getElementById('customer-email').value.trim();
+            if (!email) return alert('Vui lòng nhập email nhận Key bản quyền!');
+
+            // Save order locally for lookup feature
+            const memo = document.getElementById('payment-memo').innerText;
+            const orders = JSON.parse(localStorage.getItem('z_orders') || '[]');
+            orders.unshift({
+                orderId: memo,
+                email: email,
+                items: cart.map(c => c.name),
+                keys: cart.map(() => generateMockKey()),
+                date: new Date().toLocaleString('vi-VN'),
+                status: 'Kích hoạt thành công'
+            });
+            localStorage.setItem('z_orders', JSON.stringify(orders));
+
+            alert(`✅ Đã xác nhận đơn hàng [${memo}]!\nHệ thống đã gửi mã Key và hướng dẫn kích hoạt vào email: ${email}\nBạn cũng có thể tra cứu đơn hàng ngay trên thanh menu!`);
             cart = [];
+            discountPercent = 0;
             updateCart();
             closeCheckout();
+        }
+
+        function generateMockKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const seg = () => Array.from({length: 5}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+            return `${seg()}-${seg()}-${seg()}-${seg()}-${seg()}`;
+        }
+
+        function openLookupModal() {
+            document.getElementById('lookup-modal').classList.remove('hidden');
+        }
+
+        function closeLookupModal() {
+            document.getElementById('lookup-modal').classList.add('hidden');
+        }
+
+        function performLookup() {
+            const query = document.getElementById('lookup-input').value.trim().toLowerCase();
+            const resBox = document.getElementById('lookup-result');
+            resBox.classList.remove('hidden');
+
+            const orders = JSON.parse(localStorage.getItem('z_orders') || '[]');
+            const found = orders.filter(o => o.orderId.toLowerCase() === query || o.email.toLowerCase() === query);
+
+            if (found.length === 0) {
+                resBox.innerHTML = `
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 text-center">
+                        Không tìm thấy đơn hàng nào khớp với thông tin trên.
+                    </div>
+                `;
+            } else {
+                resBox.innerHTML = found.map(o => `
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span class="font-mono text-indigo-400 font-bold">#${o.orderId}</span>
+                            <span class="text-emerald-400 font-bold">${o.status}</span>
+                        </div>
+                        <div class="text-xs text-white font-semibold">${o.items.join(', ')}</div>
+                        <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 font-mono text-[11px] text-amber-300 break-all select-all flex items-center justify-between">
+                            <span>Key: ${o.keys.join(' | ')}</span>
+                        </div>
+                        <span class="text-[10px] text-slate-500 block">Thời gian: ${o.date}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            alert('Đã sao chép: ' + text);
+        }
+
+        function copyPromo(code) {
+            navigator.clipboard.writeText(code);
+            alert('Đã sao chép mã giảm giá: ' + code);
+        }
+
+        function showAddedNotification(title) {
+            // Quick alert in title or subtle feedback
+            const toast = document.getElementById('social-proof-toast');
+            document.getElementById('sp-user').innerText = 'Bạn';
+            document.getElementById('sp-product').innerText = title;
+            document.getElementById('sp-time').innerText = 'Vừa thêm vào giỏ hàng';
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function initSocialProof() {
+            const proofs = (storeData && storeData.marketing && storeData.marketing.socialProofs) || [];
+            if (proofs.length === 0) return;
+
+            let idx = 0;
+            setInterval(() => {
+                const item = proofs[idx];
+                document.getElementById('sp-user').innerText = item.user;
+                document.getElementById('sp-product').innerText = item.product;
+                document.getElementById('sp-time').innerText = item.time;
+
+                const toast = document.getElementById('social-proof-toast');
+                toast.classList.remove('translate-y-24', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 4000);
+
+                idx = (idx + 1) % proofs.length;
+            }, 12000);
+        }
+
+        function startSaleCountdown() {
+            let sec = 4 * 3600 + 22 * 60 + 15;
+            setInterval(() => {
+                sec--;
+                if (sec < 0) sec = 86400;
+                const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+                const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+                const s = String(sec % 60).padStart(2, '0');
+                document.getElementById('sale-timer').innerText = `${h}:${m}:${s}`;
+            }, 1000);
+        }
+
+        function startQrCountdown() {
+            if (qrInterval) clearInterval(qrInterval);
+            let sec = 15 * 60;
+            qrInterval = setInterval(() => {
+                sec--;
+                if (sec <= 0) {
+                    clearInterval(qrInterval);
+                    document.getElementById('qr-timer').innerText = 'Hết hạn';
+                    return;
+                }
+                const m = String(Math.floor(sec / 60)).padStart(2, '0');
+                const s = String(sec % 60).padStart(2, '0');
+                document.getElementById('qr-timer').innerText = `${m}:${s}`;
+            }, 1000);
         }
 
         initStore();

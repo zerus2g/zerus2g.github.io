@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z-Store Admin | Bảng Điều Khiển Quản Trị</title>
+    <title>Z-Store Admin | Bảng Điều Khiển Quản Trị & Marketing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
     </style>
@@ -18,32 +18,35 @@
     <aside class="w-64 border-r border-slate-800 bg-slate-900/50 flex flex-col justify-between shrink-0">
         <div>
             <div class="h-16 flex items-center px-6 border-b border-slate-800 space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-lg">Z</div>
+                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-lg">Z</div>
                 <div>
                     <h1 class="font-extrabold text-sm tracking-wide">Z-STORE ADMIN</h1>
-                    <span class="text-[10px] text-emerald-400 font-medium">● Hệ Thống Trực Tuyến</span>
+                    <span class="text-[10px] text-emerald-400 font-medium">● Sẵn Sàng Đồng Bộ</span>
                 </div>
             </div>
             <nav class="p-4 space-y-1.5 text-sm font-medium">
                 <button onclick="switchTab('tab-products')" id="btn-products" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white transition">
                     <i class="fa-solid fa-box text-sm"></i> Quản lý sản phẩm
                 </button>
+                <button onclick="switchTab('tab-marketing')" id="btn-marketing" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
+                    <i class="fa-solid fa-bullhorn text-sm"></i> Banner & Marketing
+                </button>
                 <button onclick="switchTab('tab-general')" id="btn-general" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
                     <i class="fa-solid fa-sliders text-sm"></i> Chi tiết trang chủ
                 </button>
                 <button onclick="switchTab('tab-payment')" id="btn-payment" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                    <i class="fa-solid fa-qrcode text-sm"></i> Thanh toán VietQR
+                    <i class="fa-solid fa-qrcode text-sm"></i> Cổng thanh toán VietQR
                 </button>
                 <button onclick="switchTab('tab-github')" id="btn-github" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition">
-                    <i class="fa-brands fa-github text-sm"></i> Cấu hình đồng bộ
+                    <i class="fa-brands fa-github text-sm"></i> Cấu hình GitHub API
                 </button>
             </nav>
         </div>
         <div class="p-4 border-t border-slate-800 space-y-2">
-            <a href="index.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+            <a href="index.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 transition">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem trang chủ
             </a>
-            <button onclick="syncToGitHub()" id="btn-quick-sync" class="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30">
+            <button onclick="syncToGitHub()" id="btn-quick-sync" class="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/30">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Đồng Bộ Lên GitHub
             </button>
         </div>
@@ -66,10 +69,10 @@
             <section id="tab-products" class="tab-content space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h2 class="text-xl font-bold">Danh Sách Sản Phẩm & Key</h2>
-                        <p class="text-xs text-slate-400">Thêm, sửa, xóa các gói key và sản phẩm hiển thị trên trang chủ</p>
+                        <h2 class="text-xl font-bold">Danh Sách Sản Phẩm & Gói Bản Quyền</h2>
+                        <p class="text-xs text-slate-400">Thêm, sửa giá, nhãn khuyến mại, tính năng và số lượng kho hiển thị trên trang chủ</p>
                     </div>
-                    <button onclick="openProductModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-bold rounded-xl flex items-center gap-2 transition">
+                    <button onclick="openProductModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-xs font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-indigo-600/20">
                         <i class="fa-solid fa-plus"></i> Thêm sản phẩm mới
                     </button>
                 </div>
@@ -81,7 +84,8 @@
                                 <th class="px-6 py-4">ID</th>
                                 <th class="px-6 py-4">Tên sản phẩm</th>
                                 <th class="px-6 py-4">Danh mục</th>
-                                <th class="px-6 py-4">Giá bán</th>
+                                <th class="px-6 py-4">Giá bán / Giá gốc</th>
+                                <th class="px-6 py-4">Tình trạng</th>
                                 <th class="px-6 py-4">Nhãn (Tag)</th>
                                 <th class="px-6 py-4 text-right">Thao tác</th>
                             </tr>
@@ -91,11 +95,29 @@
                 </div>
             </section>
 
+            <!-- TAB: MARKETING -->
+            <section id="tab-marketing" class="tab-content hidden space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold">Banner Flash Sale & Marketing</h2>
+                    <p class="text-xs text-slate-400">Tùy biến biểu ngữ khuyến mãi, mã giảm giá và số liệu uy tín</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl space-y-4 max-w-2xl">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Dòng chữ thông báo Flash Sale (Hỗ trợ HTML)</label>
+                        <textarea id="mkt-announcement" rows="3" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm focus:border-indigo-500 focus:outline-none"></textarea>
+                    </div>
+                    <button onclick="saveMarketingConfig()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-xs font-bold rounded-xl transition">
+                        Lưu Thay Đổi Marketing
+                    </button>
+                </div>
+            </section>
+
             <!-- TAB: GENERAL -->
             <section id="tab-general" class="tab-content hidden space-y-6">
                 <div>
                     <h2 class="text-xl font-bold">Chi Tiết Trang Chủ</h2>
-                    <p class="text-xs text-slate-400">Tùy biến tiêu đề, biểu ngữ và mô tả giới thiệu</p>
+                    <p class="text-xs text-slate-400">Tùy biến thương hiệu, tiêu đề và liên kết mạng xã hội</p>
                 </div>
 
                 <div class="glass p-6 rounded-2xl space-y-4 max-w-2xl">
@@ -104,15 +126,11 @@
                         <input type="text" id="cfg-name" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm focus:border-indigo-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Huy hiệu thông báo (Badge)</label>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Huy hiệu biểu ngữ (Hero Badge)</label>
                         <input type="text" id="cfg-badge" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm focus:border-indigo-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Tiêu đề chính (Headline)</label>
-                        <input type="text" id="cfg-title" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm focus:border-indigo-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Mô tả phụ (Description)</label>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Mô tả giới thiệu (Hero Description)</label>
                         <textarea id="cfg-desc" rows="3" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm focus:border-indigo-500 focus:outline-none"></textarea>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -135,7 +153,7 @@
             <section id="tab-payment" class="tab-content hidden space-y-6">
                 <div>
                     <h2 class="text-xl font-bold">Cổng Thanh Toán VietQR Tự Động</h2>
-                    <p class="text-xs text-slate-400">Cấu hình tài khoản ngân hàng để tạo mã QR thanh toán</p>
+                    <p class="text-xs text-slate-400">Cấu hình tài khoản ngân hàng để tạo mã QR thanh toán chuẩn Napas 247</p>
                 </div>
 
                 <div class="glass p-6 rounded-2xl space-y-4 max-w-2xl">
@@ -163,7 +181,7 @@
             <section id="tab-github" class="tab-content hidden space-y-6">
                 <div>
                     <h2 class="text-xl font-bold">Đồng Bộ Trực Tiếp Lên GitHub Repository</h2>
-                    <p class="text-xs text-slate-400">Tự động commit và đẩy dữ liệu cấu hình lên nhánh main để cập nhật website</p>
+                    <p class="text-xs text-slate-400">Tự động commit và đẩy dữ liệu lên GitHub Pages để cập nhật website tức thì</p>
                 </div>
 
                 <div class="glass p-6 rounded-2xl space-y-4 max-w-2xl">
@@ -202,7 +220,7 @@
 
     <!-- Product Modal -->
     <div id="product-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="max-w-lg w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+        <div class="max-w-lg w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl relative max-h-[92vh] overflow-y-auto">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800">
                 <h3 id="modal-product-title" class="font-bold text-base">Thêm Sản Phẩm Mới</h3>
                 <button onclick="closeProductModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -211,28 +229,43 @@
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="block font-semibold text-slate-400 mb-1">Tên sản phẩm / Gói key</label>
-                    <input type="text" id="prod-name" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="prod-name" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-semibold text-slate-400 mb-1">Danh mục</label>
-                        <select id="prod-cat" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
-                            <option value="license">Bản Quyền OS/App</option>
-                            <option value="tool">Tool & Tiện Ích</option>
+                        <select id="prod-cat" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                            <option value="license">💻 Bản Quyền OS / Office</option>
+                            <option value="tool">⚙️ Tool & Tự Động Hóa</option>
+                            <option value="dev">👨‍💻 Developer & Đồ Họa</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-400 mb-1">Giá bán (VNĐ)</label>
-                        <input type="number" id="prod-price" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                        <label class="block font-semibold text-slate-400 mb-1">Giá bán khuyến mãi (VNĐ)</label>
+                        <input type="number" id="prod-price" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Giá gốc gạch chân (VNĐ)</label>
+                        <input type="number" id="prod-originalPrice" placeholder="VD: 500000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Tình trạng kho</label>
+                        <input type="text" id="prod-stock" placeholder="VD: Sẵn hàng, Còn 10 key" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
                     </div>
                 </div>
                 <div>
                     <label class="block font-semibold text-slate-400 mb-1">Nhãn hiển thị (Tag)</label>
-                    <input type="text" id="prod-tag" placeholder="VD: Hot, Bán chạy, Pro, New" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="prod-tag" placeholder="VD: Bestseller, Hot Deal, New" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
                 </div>
                 <div>
                     <label class="block font-semibold text-slate-400 mb-1">Mô tả ngắn</label>
-                    <textarea id="prod-desc" rows="3" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500"></textarea>
+                    <textarea id="prod-desc" rows="2" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-400 mb-1">Các điểm nổi bật (phân tách bằng dấu phẩy)</label>
+                    <input type="text" id="prod-features" placeholder="VD: Bản quyền vĩnh viễn, Kích hoạt online, Bảo hành 1-1" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-indigo-500">
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
@@ -253,11 +286,7 @@
                 storeData = await res.json();
             } catch (err) {
                 console.warn('Load local fallback', err);
-                storeData = {
-                    site: { name: "Z-STORE", badge: "Hệ thống tự động", title: "Kho Bản Quyền", description: "Bản quyền số", telegram: "", discord: "" },
-                    payment: { bankId: "970422", accountNo: "000000000", accountName: "NGUYEN VAN A" },
-                    products: []
-                };
+                storeData = { site: {}, payment: {}, marketing: {}, products: [] };
             }
             populateForm();
             renderTable();
@@ -267,10 +296,13 @@
             if (!storeData) return;
             document.getElementById('cfg-name').value = storeData.site.name || '';
             document.getElementById('cfg-badge').value = storeData.site.badge || '';
-            document.getElementById('cfg-title').value = storeData.site.title || '';
             document.getElementById('cfg-desc').value = storeData.site.description || '';
             document.getElementById('cfg-telegram').value = storeData.site.telegram || '';
             document.getElementById('cfg-discord').value = storeData.site.discord || '';
+
+            if (storeData.marketing) {
+                document.getElementById('mkt-announcement').value = storeData.marketing.announcement || '';
+            }
 
             document.getElementById('pay-bankId').value = storeData.payment.bankId || '';
             document.getElementById('pay-accountNo').value = storeData.payment.accountNo || '';
@@ -285,7 +317,11 @@
                     <td class="px-6 py-4 font-mono text-slate-500">#${p.id}</td>
                     <td class="px-6 py-4 font-semibold text-white">${p.name}</td>
                     <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">${p.category}</span></td>
-                    <td class="px-6 py-4 font-bold text-indigo-400">${p.price.toLocaleString()}đ</td>
+                    <td class="px-6 py-4">
+                        <span class="font-bold text-indigo-400">${p.price.toLocaleString()}đ</span>
+                        ${p.originalPrice ? `<span class="text-slate-500 line-through text-[11px] block">${p.originalPrice.toLocaleString()}đ</span>` : ''}
+                    </td>
+                    <td class="px-6 py-4 text-emerald-400 font-semibold">${p.stock || 'Sẵn hàng'}</td>
                     <td class="px-6 py-4"><span class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">${p.tag || '-'}</span></td>
                     <td class="px-6 py-4 text-right space-x-2">
                         <button onclick="editProduct(${p.id})" class="text-indigo-400 hover:text-indigo-300 font-semibold">Sửa</button>
@@ -305,6 +341,7 @@
 
             const btnMap = {
                 'tab-products': 'btn-products',
+                'tab-marketing': 'btn-marketing',
                 'tab-general': 'btn-general',
                 'tab-payment': 'btn-payment',
                 'tab-github': 'btn-github'
@@ -317,6 +354,7 @@
 
             const titleMap = {
                 'tab-products': 'Quản Lý Sản Phẩm',
+                'tab-marketing': 'Banner Flash Sale & Marketing',
                 'tab-general': 'Cấu Hình Chi Tiết Trang Chủ',
                 'tab-payment': 'Cấu Hình Thanh Toán VietQR',
                 'tab-github': 'Cấu Hình Đồng Bộ GitHub'
@@ -327,18 +365,23 @@
         function saveGeneralConfig() {
             storeData.site.name = document.getElementById('cfg-name').value;
             storeData.site.badge = document.getElementById('cfg-badge').value;
-            storeData.site.title = document.getElementById('cfg-title').value;
             storeData.site.description = document.getElementById('cfg-desc').value;
             storeData.site.telegram = document.getElementById('cfg-telegram').value;
             storeData.site.discord = document.getElementById('cfg-discord').value;
-            showNotification('Đã lưu cấu hình chung vào bộ nhớ tạm!');
+            showNotification('Đã lưu cấu hình chung!');
+        }
+
+        function saveMarketingConfig() {
+            if (!storeData.marketing) storeData.marketing = {};
+            storeData.marketing.announcement = document.getElementById('mkt-announcement').value;
+            showNotification('Đã lưu cấu hình marketing!');
         }
 
         function savePaymentConfig() {
             storeData.payment.bankId = document.getElementById('pay-bankId').value;
             storeData.payment.accountNo = document.getElementById('pay-accountNo').value;
             storeData.payment.accountName = document.getElementById('pay-accountName').value;
-            showNotification('Đã lưu cấu hình thanh toán vào bộ nhớ tạm!');
+            showNotification('Đã lưu cấu hình thanh toán!');
         }
 
         function openProductModal(prod = null) {
@@ -346,8 +389,11 @@
             document.getElementById('prod-name').value = prod ? prod.name : '';
             document.getElementById('prod-cat').value = prod ? prod.category : 'license';
             document.getElementById('prod-price').value = prod ? prod.price : '';
+            document.getElementById('prod-originalPrice').value = prod ? (prod.originalPrice || '') : '';
+            document.getElementById('prod-stock').value = prod ? (prod.stock || '') : '';
             document.getElementById('prod-tag').value = prod ? (prod.tag || '') : '';
             document.getElementById('prod-desc').value = prod ? prod.desc : '';
+            document.getElementById('prod-features').value = (prod && prod.features) ? prod.features.join(', ') : '';
             document.getElementById('modal-product-title').innerText = prod ? 'Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới';
             document.getElementById('product-modal').classList.remove('hidden');
         }
@@ -361,8 +407,11 @@
             const name = document.getElementById('prod-name').value;
             const category = document.getElementById('prod-cat').value;
             const price = parseInt(document.getElementById('prod-price').value) || 0;
+            const originalPrice = parseInt(document.getElementById('prod-originalPrice').value) || 0;
+            const stock = document.getElementById('prod-stock').value || 'Sẵn hàng';
             const tag = document.getElementById('prod-tag').value;
             const desc = document.getElementById('prod-desc').value;
+            const features = document.getElementById('prod-features').value.split(',').map(s => s.trim()).filter(Boolean);
 
             if (!name) return alert('Vui lòng nhập tên sản phẩm!');
 
@@ -372,12 +421,15 @@
                     target.name = name;
                     target.category = category;
                     target.price = price;
+                    target.originalPrice = originalPrice;
+                    target.stock = stock;
                     target.tag = tag;
                     target.desc = desc;
+                    target.features = features;
                 }
             } else {
                 const newId = storeData.products.length ? Math.max(...storeData.products.map(p => p.id)) + 1 : 1;
-                storeData.products.push({ id: newId, name, category, price, tag, desc });
+                storeData.products.push({ id: newId, name, category, price, originalPrice, stock, tag, desc, features, rating: 5.0, reviews: 100 });
             }
 
             renderTable();
@@ -424,7 +476,7 @@
 
             if (!token) {
                 switchTab('tab-github');
-                alert('Vui lòng nhập GitHub Token (PAT) trong tab Cấu hình đồng bộ để thực hiện lưu!');
+                alert('Vui lòng nhập GitHub Token (PAT) trong tab Cấu hình GitHub API để thực hiện lưu!');
                 return;
             }
 
@@ -432,7 +484,6 @@
             statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span> <span>Đang đồng bộ...</span>`;
 
             try {
-                // 1. Get current SHA of data/store.json
                 const fileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/data/store.json?ref=${branch}`;
                 let currentSha = null;
                 const getRes = await fetch(fileUrl, {
@@ -443,7 +494,6 @@
                     currentSha = fileData.sha;
                 }
 
-                // 2. Put file with updated json
                 const jsonContent = JSON.stringify(storeData, null, 2);
                 const utf8Bytes = new TextEncoder().encode(jsonContent);
                 let binaryStr = '';

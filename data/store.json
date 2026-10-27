@@ -1,12 +1,47 @@
 {
   "site": {
     "name": "Z-STORE",
-    "badge": "Hệ Thống Giao Key & Tài Khoản Tự Động 24/7",
+    "badge": "⚡ HỆ THỐNG GIAO KEY & TÀI KHOẢN TỰ ĐỘNG 24/7 QUA API",
     "title": "Kho Bản Quyền Số & Phần Mềm Uy Tín Hàng Đầu",
-    "description": "Bảo hành trọn đời, hỗ trợ kỹ thuật tức thì, thanh toán tự động qua QR Code ngân hàng & tiền số.",
+    "description": "Kích hoạt tức thì trong 30 giây. Cam kết 100% bản quyền chính hãng, bảo hành 1-đổi-1 trọn đời, hỗ trợ kỹ thuật Ultraviewer trực tiếp.",
     "telegram": "https://t.me/example",
     "discord": "https://discord.gg/example",
-    "footer": "© 2026 Z-Store. Hosted on GitHub Pages. Giao hàng tự động qua API."
+    "hotline": "0988.xxx.xxx",
+    "footer": "© 2026 Z-Store Global. Nền tảng phân phối sản phẩm số tự động hàng đầu."
+  },
+  "marketing": {
+    "announcement": "🔥 SIÊU ƯU ĐÃI: Giảm thêm 20% cho mọi đơn hàng hôm nay với mã <strong>ZSTORE2026</strong>. Giao dịch tự động 24/7!",
+    "stats": [
+      { "label": "Key Đã Phân Phối", "value": "32,800+", "icon": "fa-key" },
+      { "label": "Khách Hàng Hài Lòng", "value": "99.8%", "icon": "fa-face-smile" },
+      { "label": "Thời Gian Nhận Key", "value": "< 15 Giây", "icon": "fa-bolt" },
+      { "label": "Hỗ Trợ Kỹ Thuật", "value": "24/7/365", "icon": "fa-headset" }
+    ],
+    "socialProofs": [
+      { "user": "0985***821", "product": "Windows 11 Pro Retail Key", "time": "1 phút trước" },
+      { "user": "nam.tran***@gmail.com", "product": "Office 2024 Pro Plus Key", "time": "3 phút trước" },
+      { "user": "0912***449", "product": "JetBrains All Products Pack", "time": "7 phút trước" },
+      { "user": "hoang.dev***@outlook.com", "product": "Auto Tool Automator Pro", "time": "10 phút trước" },
+      { "user": "0868***115", "product": "Canva Pro vĩnh viễn", "time": "14 phút trước" }
+    ],
+    "faqs": [
+      {
+        "q": "Sau khi thanh toán tôi nhận key như thế nào?",
+        "a": "Hệ thống tự động quét giao dịch ngân hàng theo mã đơn hàng. Ngay khi tiền vào tài khoản (khoảng 5-15 giây), hệ thống sẽ gửi mã key và hướng dẫn kích hoạt qua email bạn cung cấp, đồng thời hiển thị trực tiếp trên màn hình."
+      },
+      {
+        "q": "Key bản quyền có thời hạn sử dụng bao lâu?",
+        "a": "Tất cả các key hệ điều hành Windows, Office đều là bản quyền vĩnh viễn trọn đời (Retail Lifetime), có thể chuyển máy hoặc cài lại Win thoải mái. Các phần mềm định kỳ sẽ có thời hạn rõ ràng trong phần mô tả."
+      },
+      {
+        "q": "Chính sách bảo hành và đổi trả ra sao?",
+        "a": "Z-Store cam kết bảo hành 1-đổi-1 ngay lập tức nếu key gặp bất kỳ lỗi kích hoạt nào. Hỗ trợ teamview/ultraview cài đặt trực tiếp nếu khách hàng gặp sự cố."
+      },
+      {
+        "q": "Những hình thức thanh toán được hỗ trợ?",
+        "a": "Chúng tôi hỗ trợ quét mã VietQR tự động tất cả các ngân hàng Việt Nam (MB, Vietcombank, Techcombank, VPBank, ACB...) và ví MoMo, ZaloPay không mất phí giao dịch."
+      }
+    ]
   },
   "payment": {
     "bankId": "970422",
@@ -15,58 +50,89 @@
     "template": "compact2"
   },
   "categories": [
-    { "id": "all", "name": "Tất cả" },
-    { "id": "tool", "name": "Tool & Tiện Ích" },
-    { "id": "license", "name": "Bản Quyền OS/App" }
+    { "id": "all", "name": "🔥 Tất Cả Sản Phẩm" },
+    { "id": "license", "name": "💻 Bản Quyền OS / Office" },
+    { "id": "tool", "name": "⚙️ Tool & Tự Động Hóa" },
+    { "id": "dev", "name": "👨‍💻 Developer & Đồ Họa" }
   ],
   "products": [
     {
       "id": 1,
-      "name": "Windows 11 Pro Retail Key",
+      "name": "Windows 11 Pro Retail Key (Chính Hãng)",
       "category": "license",
-      "price": 150000,
-      "desc": "Key bản quyền vĩnh viễn, kích hoạt 1 máy.",
-      "tag": "Bán chạy"
+      "price": 149000,
+      "originalPrice": 450000,
+      "rating": 5.0,
+      "reviews": 384,
+      "stock": "Còn 18 key",
+      "tag": "Bestseller",
+      "desc": "Key kích hoạt vĩnh viễn theo mainboard, update trực tiếp từ Microsoft, bảo hành trọn đời.",
+      "features": ["Bản quyền vĩnh viễn 1 PC", "Hỗ trợ cài đặt lại Win", "Update OTA chính thức", "Giao ngay tức thì"]
     },
     {
       "id": 2,
-      "name": "Office 2024 Pro Plus Key",
+      "name": "Office 2024 Pro Plus Key (Lifetime)",
       "category": "license",
-      "price": 200000,
-      "desc": "Bản quyền trọn đời, tải trực tiếp từ Microsoft.",
-      "tag": "Hot"
+      "price": 199000,
+      "originalPrice": 590000,
+      "rating": 4.9,
+      "reviews": 290,
+      "stock": "Còn 12 key",
+      "tag": "Hot Deal",
+      "desc": "Trọn bộ Word, Excel, PowerPoint, Outlook 2024 mới nhất. Kích hoạt online chính thức.",
+      "features": ["Đầy đủ ứng dụng Office 2024", "Bản quyền trọn đời", "Tải từ setup.office.com", "Bảo hành 1-đổi-1"]
     },
     {
       "id": 3,
-      "name": "Auto Tool Automator Pro (1 Tháng)",
+      "name": "Auto Task Automator Pro v4.2 (1 Tháng)",
       "category": "tool",
-      "price": 120000,
-      "desc": "Tool tự động hóa tác vụ hệ điều hành, multi-thread.",
-      "tag": "New"
+      "price": 129000,
+      "originalPrice": 250000,
+      "rating": 4.8,
+      "reviews": 115,
+      "stock": "Sẵn hàng",
+      "tag": "New Tool",
+      "desc": "Công cụ tự động hóa tác vụ Windows, multi-thread, hỗ trợ giả lập bàn phím/chuột phần cứng.",
+      "features": ["Tự động hóa đa luồng", "Chống phát hiện giả lập", "Script Engine mạnh mẽ", "Update tính năng liên tục"]
     },
     {
       "id": 4,
-      "name": "JetBrains All Products Pack (1 Năm)",
-      "category": "license",
-      "price": 350000,
-      "desc": "Kích hoạt chính chủ qua email tài khoản.",
-      "tag": "Ưu đãi"
+      "name": "JetBrains All Products Pack (1 Năm License)",
+      "category": "dev",
+      "price": 349000,
+      "originalPrice": 1200000,
+      "rating": 5.0,
+      "reviews": 210,
+      "stock": "Còn 5 slot",
+      "tag": "Dev Choice",
+      "desc": "Bao gồm IntelliJ IDEA, PyCharm, WebStorm, CLion, Rider, DataGrip... Kích hoạt email chính chủ.",
+      "features": ["Toàn bộ 16+ IDE JetBrains", "Kích hoạt tài khoản chính chủ", "Hỗ trợ mọi hệ điều hành", "Tải plugin trả phí"]
     },
     {
       "id": 5,
-      "name": "Network Packet Inspector Bot",
+      "name": "High-Speed Network Traffic Monitor",
       "category": "tool",
-      "price": 180000,
-      "desc": "Phân tích luồng network và giám sát server riêng.",
-      "tag": "Pro"
+      "price": 179000,
+      "originalPrice": 350000,
+      "rating": 4.9,
+      "reviews": 88,
+      "stock": "Sẵn hàng",
+      "tag": "Pro Spec",
+      "desc": "Giám sát, phân tích gói tin mạng và phát hiện bất thường kết nối theo thời gian thực.",
+      "features": ["Phân tích sâu DPI thời gian thực", "Bộ lọc quy tắc tùy biến", "Cảnh báo telegram bot", "Nhẹ & tối ưu CPU < 1%"]
     },
     {
       "id": 6,
-      "name": "Canva Pro vĩnh viễn (Edu Team)",
-      "category": "license",
-      "price": 90000,
-      "desc": "Nâng cấp trực tiếp trên tài khoản cá nhân.",
-      "tag": "Tiết kiệm"
+      "name": "Canva Pro Trọn Đời (Nâng Cấp Email Chính Chủ)",
+      "category": "dev",
+      "price": 89000,
+      "originalPrice": 300000,
+      "rating": 5.0,
+      "reviews": 560,
+      "stock": "Sẵn hàng",
+      "tag": "Tiết Kiệm",
+      "desc": "Mở khóa toàn bộ 100M+ hình ảnh, template cao cấp, tính năng Brand Kit và AI Magic Studio.",
+      "features": ["Truy cập kho template Pro", "Xóa phông nền 1 chạm", "Bộ công cụ AI Magic", "Lưu trữ đám mây 100GB"]
     }
   ]
 }
